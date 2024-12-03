@@ -2,15 +2,26 @@ import logo from './logo.svg';
 import './App.css';
 import Greeting from './Components/Greeting';
 import { useEffect, useMemo } from 'react';
+import "./App.css";
+import Login from "./login/Login";
+import Home from "./home/Home";
+import Tools from "./tools/Tools";
+import StandingOrder from "./standingOrder/StandingOrder";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./navbar/NavBar";
 
-var currentSteps = ["testID","testID2"]
+
+var totalSteps = ["tools-navigate-button","</tools>","create-standing-order-button","</create-standing-order>","account-select","recipient-name-input","account-number-input","amount-input","start-date-input","confirm-button"]
 
 var previousBorder;
 var previousBorderWidth;
 var previousBorderColor;
 
 var currentStep = -1;
+var currentSteps = []
 
+var previousPage ="/";
+var currentPage;
 function removeBorder(component){
   console.log(component)
   if(component){
@@ -21,6 +32,27 @@ function removeBorder(component){
 }
 
 function getElement() {
+  if()
+  var i = 0;
+  var j;
+  currentPage = window.location.pathname;
+  console.log(currentPage)
+  totalSteps.forEach(element => {
+    if(element==="<"+currentPage+">"){
+      console.log("j found", i)
+      j=i+1;
+    }
+    i++;
+  });
+  
+  currentSteps = totalSteps.slice(j);
+  console.log(currentSteps)
+
+  if(currentPage!=previousPage){
+    currentStep=0;
+  }
+  previousPage=currentPage;
+
   const component = document.getElementById(currentSteps[currentStep]);
 
   if(currentStep>0){
@@ -52,8 +84,8 @@ document.addEventListener('click', (event) => {
   }
 });
 
-function App() {
 
+function App() {
   useEffect(() => {
     console.log("effect")
     if(currentStep===0){
@@ -62,31 +94,19 @@ function App() {
       currentStep=0;
     }
   }, []);
-
-
   
   return (
-    <div className="App">
-      <header className="App-header">
-
-      <a onClick={()=>{}}>test</a>
-        <a>test 2</a>
-
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        {/* <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-        <Greeting></Greeting>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="home" element={<Home />} />
+          <Route path="tools" element={<Tools />} />
+          <Route path="create-standing-order" element={<StandingOrder />} />
+        </Routes>
+        <NavBar />
+      </div>
+    </BrowserRouter>
   );
 }
 
