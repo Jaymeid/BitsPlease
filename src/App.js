@@ -23,8 +23,9 @@ var currentSteps = []
 var previousPage ="/";
 var currentPage;
 
-var x =-1;
-var y = -1;
+var x =5;
+var y = 5;
+var coordLoaded = false;
 
 function removeBorder(component){
   if(component){
@@ -43,11 +44,13 @@ function getElementFromCoords(){
     totalSteps=[element.id]
     currentStep=0;
   }
+  coordLoaded=true;
 }
 
 function getElementBridge(){
-  if(x!=-1){
+  if(x!=-1 && coordLoaded===false){
     getElementFromCoords();
+    
 
   }
   getElement();
