@@ -23,6 +23,7 @@ var currentSteps = []
 var previousPage ="/";
 var currentPage;
 function removeBorder(component){
+  
   console.log(component)
   if(component){
     component.style.border = previousBorder;
