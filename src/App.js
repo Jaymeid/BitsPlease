@@ -22,14 +22,35 @@ var currentSteps = []
 
 var previousPage ="/";
 var currentPage;
-function removeBorder(component){
 
-  console.log(component)
+var x =-1;
+var y = -1;
+
+function removeBorder(component){
   if(component){
     component.style.border = previousBorder;
     component.style.borderWidth = previousBorderWidth;
     component.style.borderColor = previousBorderColor;
   }
+}
+
+function getElementFromCoords(){
+  const element = document.elementFromPoint(x, y);
+  console.log(element)
+  if(element){
+    console.log(element.id)
+    console.log("==")
+    totalSteps=[element.id]
+    currentStep=0;
+  }
+}
+
+function getElementBridge(){
+  if(x!=-1){
+    getElementFromCoords();
+
+  }
+  getElement();
 }
 
 function getElement() {
@@ -79,8 +100,9 @@ document.addEventListener('click', (event) => {
   // Your custom function call
   console.log("clicked")
   var id = event.target.id;
+  var rect = event.target.getBoundingClientRect();
   if(id===currentSteps[currentStep-1] || currentStep>=currentSteps.length){
-    getElement();  
+    getElementBridge();  
   }
 });
 
@@ -89,16 +111,16 @@ function App() {
   useEffect(() => {
     console.log("effect")
     if(currentStep===0){
-      getElement();
+      getElementBridge();
     }else{
       currentStep=0;
     }
   }, []);
   
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
+    <BrowserRouter id="test">
+      <div className="App" id="test3">
+        <Routes id="test2">
           <Route path="/" element={<Login />} />
           <Route path="home" element={<Home />} />
           <Route path="tools" element={<Tools />} />
